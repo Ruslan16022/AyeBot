@@ -41,7 +41,7 @@ USER userbot
 #
 # Clone master by default
 #
-RUN git clone -b master https://github.com/RaphielGang/Telegram-UserBot.git /home/userbot/userbot
+RUN git clone -b staging https://github.com/PainKiller3/Telegram-UserBot.git /home/userbot/userbot
 
 #
 # !!! NOT FOR PRODUCTION !!!

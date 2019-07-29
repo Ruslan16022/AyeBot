@@ -78,7 +78,7 @@ async def bot_support(wannahelp):
 @errors_handler
 async def repo_is_here(wannasee):
     """ For .repo command, just returns the repo URL. """
-    await wannasee.edit("https://github.com/RaphielGang/Telegram-UserBot/")
+    await wannasee.edit("[Click Here To Get The Link Of My Userbot Repo](https://github.com/PainKiller3/Telegram-UserBot/)")
 
 
 CMD_HELP.update({
