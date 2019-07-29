@@ -5,10 +5,13 @@
 #
 """ Userbot module containing various modules. """
 
+from userbot import bot
 import os, shutil, bs4, re
 from html import unescape
 from re import findall
 from datetime import datetime
+from collections import deque
+from telethon import events, functions, types
 
 from userbot import (BOTLOG, BOTLOG_CHATID, CMD_HELP, CURRENCY_API,
                      YOUTUBE_API_KEY, bot)
@@ -104,6 +107,34 @@ async def payf(e):
         await e.edit(pay)
 
 
+@register(outgoing=True, pattern="^.cry$")
+async def cry(e):
+    if not e.text[0].isalpha() and e.text[0] not in ("/", "#", "@", "!"):
+        await e.edit("(;´༎ຶД༎ຶ)")
+
+
+@register(outgoing=True, pattern="^.fp$")
+async def facepalm(e):
+    if not e.text[0].isalpha() and e.text[0] not in ("/", "#", "@", "!"):
+        await e.edit("🤦‍♂")
+
+@register(outgoing=True, pattern="^.myusernames$")
+async def _(event):
+    if event.fwd_from:
+        return
+    result = await bot(functions.channels.GetAdminedPublicChannelsRequest())
+    output_str = ""
+    for channel_obj in result.chats:
+        output_str += f"- {channel_obj.title} @{channel_obj.username} \n"
+    await event.edit(output_str)
+
+
+@register(outgoing=True, pattern="^.channel$")
+async def channel(e):
+    if not e.text[0].isalpha() and e.text[0] not in ("/", "#", "@", "!"):
+        await e.edit("[Join This Channel For More Info About Reignz Updates](https://t.me/reignzupdate)")
+
+
 CMD_HELP.update({
     'imdb': ".imdb <movie-name>\
     \nUsage: Shows movie info and other stuffs."
@@ -111,4 +142,16 @@ CMD_HELP.update({
 CMD_HELP.update({
     'f': ".f <texts or emojis>\
     \nUsage: Pay Respect."
+})
+CMD_HELP.update({
+    'cry': ".cry\
+    \nUsage: Crying."
+})
+CMD_HELP.update({
+    'fp': ".fp\
+    \nUsage: facepalm."
+})
+CMD_HELP.update({
+    'channel': ".channel\
+    \nUsage: channel link."
 })
