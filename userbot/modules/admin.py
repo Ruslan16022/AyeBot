@@ -244,7 +244,7 @@ async def ban(bon):
     # is done gracefully
     # Shout out the ID, so that fedadmins can fban later
 
-    await bon.edit("`{}` was banned!".format(str(user.id)))
+    await bon.edit(f"`Banned` [{user.first_name}](tg://user?id={user.id})`!`")
 
     # Announce to the logging group if we have demoted successfully
     if BOTLOG:
