@@ -560,8 +560,8 @@ async def bluetext(bt_e):
     """ Believe me, you will find this useful. """
     if await bt_e.get_reply_message():
         await bt_e.edit(
-            "`BLUETEXT MUST CLICK.`\n"
-            "`Are you a stupid animal which is attracted to colours?`")
+                "/BLUETEXT /MUST /CLICK.\n"
+                "/ARE /YOU /A /STUPID /ANIMAL /WHICH /IS /ATTRACTED /TO /COLOURS ?")
 
 
 @register(outgoing=True, pattern="^.cry$")
