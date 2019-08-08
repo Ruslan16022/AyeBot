@@ -20,7 +20,7 @@ from telethon.tl.types import (ChannelParticipantsAdmins, ChatAdminRights,
                                ChatBannedRights, MessageEntityMentionName,
                                MessageMediaPhoto)
 
-from userbot import (BRAIN_CHECKER, CMD_HELP, BOTLOG, BOTLOG_CHATID, bot,
+from userbot import (CMD_HELP, BOTLOG, BOTLOG_CHATID, bot,
                      is_mongo_alive, is_redis_alive)
 from userbot.events import register, errors_handler
 from userbot.modules.dbhelper import (mute, unmute, get_muted, gmute, ungmute,
@@ -103,9 +103,6 @@ async def set_group_photo(gpic):
 
 
 @register(outgoing=True, pattern="^.promote(?: |$)(.*)")
-@register(incoming=True,
-          from_users=BRAIN_CHECKER,
-          pattern="^.promote(?: |$)(.*)")
 @errors_handler
 async def promote(promt):
     """ For .promote command, do promote targeted person """
@@ -156,9 +153,6 @@ async def promote(promt):
 
 
 @register(outgoing=True, pattern="^.demote(?: |$)(.*)")
-@register(incoming=True,
-          from_users=BRAIN_CHECKER,
-          pattern="^.demote(?: |$)(.*)")
 @errors_handler
 async def demote(dmod):
     """ For .demote command, do demote targeted person """
@@ -207,7 +201,6 @@ async def demote(dmod):
 
 
 @register(outgoing=True, pattern="^.ban(?: |$)(.*)")
-@register(incoming=True, from_users=BRAIN_CHECKER, pattern="^.ban(?: |$)(.*)")
 @errors_handler
 async def ban(bon):
     """ For .ban command, do "thanos" at targeted person """
@@ -227,10 +220,6 @@ async def ban(bon):
     else:
         return
 
-    # If the user is a sudo
-    if user.id in BRAIN_CHECKER:
-        await bon.edit("`Ban Error! I am not supposed to ban this user`")
-        return
 
     # Announce that we're going to whack the pest
     await bon.edit("`Whacking the pest!`")
@@ -265,9 +254,6 @@ async def ban(bon):
 
 
 @register(outgoing=True, pattern="^.unban(?: |$)(.*)")
-@register(incoming=True,
-          from_users=BRAIN_CHECKER,
-          pattern="^.unban(?: |$)(.*)")
 @errors_handler
 async def nothanos(unbon):
     """ For .unban command, undo "thanos" on target """
@@ -335,11 +321,6 @@ async def spider(spdr):
 
     if user.id == self_user.id:
         await spdr.edit("`Mute Error! You are not supposed to mute yourself!`")
-        return
-
-    # If the targeted user is a Sudo
-    if user.id in BRAIN_CHECKER:
-        await spdr.edit("`Mute Error! I am not supposed to mute this user`")
         return
 
     # If everything goes well, do announcing and mute
@@ -522,10 +503,6 @@ async def gspider(gspdr):
     else:
         return
 
-    # If the targeted user is a SUDO
-    if user.id in BRAIN_CHECKER:
-        await gspdr.edit("`Gmute Error! Couldn't gmute this user`")
-        return
 
     # If pass, inform and start gmuting
     await gspdr.edit("`Grabs a huge, sticky duct tape!`")
@@ -633,7 +610,6 @@ async def get_admin(show):
 
 
 @register(outgoing=True, pattern="^.pin(?: |$)(.*)")
-@register(incoming=True, from_users=BRAIN_CHECKER, pattern="^.pin(?: |$)(.*)")
 @errors_handler
 async def pin(msg):
     # Admin or creator check
@@ -679,7 +655,6 @@ async def pin(msg):
 
 
 @register(outgoing=True, pattern="^.kick(?: |$)(.*)")
-@register(incoming=True, from_users=BRAIN_CHECKER, pattern="^.kick(?: |$)(.*)")
 @errors_handler
 async def kick(usr):
     """ For .kick command, kick someone from the group using the userbot. """
@@ -698,10 +673,6 @@ async def kick(usr):
         await usr.edit("`Couldn't fetch user.`")
         return
 
-    # If the targeted user is a Sudo
-    if user.id in BRAIN_CHECKER:
-        await usr.edit("`Kick Error! I am not supposed to kick this user`")
-        return
 
     await usr.edit("`Kicking...`")
 

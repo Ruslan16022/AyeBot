@@ -98,16 +98,6 @@ GDRIVE_FOLDER = os.environ.get("GDRIVE_FOLDER", None)
 # pylint: disable=invalid-name
 bot = TelegramClient("userbot", API_KEY, API_HASH)
 
-if os.path.exists("learning-data-root.check"):
-    os.remove("learning-data-root.check")
-else:
-    LOGS.info("Braincheck file does not exist, fetching...")
-
-URL = 'https://raw.githubusercontent.com/RaphielGang/'
-URL += 'databasescape/master/learning-data-root.check'
-
-with open('learning-data-root.check', 'wb') as load:
-    load.write(get(URL).content)
 
 # Init Mongo
 MONGOCLIENT = MongoClient(MONGO_DB_URI, 27017, serverSelectionTimeoutMS=1)
@@ -138,7 +128,6 @@ def is_redis_alive():
 
 # Global Variables
 COUNT_MSG = 0
-BRAIN_CHECKER = []
 USERS = {}
 COUNT_PM = {}
 LASTMSG = {}
