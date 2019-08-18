@@ -60,6 +60,10 @@ CONSOLE_LOGGER_VERBOSE = sb(os.environ.get("CONSOLE_LOGGER_VERBOSE", "False"))
 
 MONGO_DB_URI = os.environ.get("MONGO_DB_URI", None)
 
+# remove.bg API key
+REM_BG_API_KEY = os.environ.get("REM_BG_API_KEY", None)
+TEMP_DOWNLOAD_DIRECTORY = os.environ.get("TMP_DOWNLOAD_DIRECTORY", "./downloads")
+
 CHROME_DRIVER = os.environ.get("CHROME_DRIVER", None)
 
 GOOGLE_CHROME_BIN = os.environ.get("GOOGLE_CHROME_BIN", None)

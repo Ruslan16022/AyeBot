@@ -677,6 +677,17 @@ async def channel(e):
         await e.edit("[Join This Channel For More Info About Reignz Updates](https://t.me/reignzupdate)")
 
 
+@register(pattern=r".scam(?: |$)(.*)", outgoing=True)
+async def scam(event):
+    await event.delete()
+    input_str = event.pattern_match.group(1)
+    action = "typing"
+    if input_str:
+        action = input_str
+    async with event.client.action(event.chat_id, action):
+        await asyncio.sleep(60)
+
+
 @register(outgoing=True, pattern='^.type(?: |$)(.*)')
 @errors_handler
 async def typewriter(typew):
