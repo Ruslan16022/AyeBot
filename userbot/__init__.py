@@ -59,6 +59,10 @@ PM_AUTO_BAN = sb(os.environ.get("PM_AUTO_BAN", "False"))
 
 MONGO_DB_URI = os.environ.get("MONGO_DB_URI", None)
 
+# remove.bg API key
+REM_BG_API_KEY = os.environ.get("REM_BG_API_KEY", None)
+TEMP_DOWNLOAD_DIRECTORY = os.environ.get("TMP_DOWNLOAD_DIRECTORY", "./downloads")
+
 SCREENSHOT_LAYER_ACCESS_KEY = os.environ.get("SCREENSHOT_LAYER_ACCESS_KEY",
                                              None)
 
