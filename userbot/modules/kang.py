@@ -14,6 +14,9 @@ from telethon.tl.types import DocumentAttributeFilename, MessageMediaPhoto
 
 from userbot import bot, CMD_HELP
 from userbot.events import register, errors_handler
+from telethon.tl.functions.messages import GetStickerSetRequest
+from telethon.tl.types import InputStickerSetID
+from telethon.tl.types import DocumentAttributeSticker
 PACK_FULL = "Whoa! That's probably enough stickers for one pack, give it a break. \
 A pack can't have more than 120 stickers at the moment."
 
@@ -235,6 +238,34 @@ async def resize_photo(photo):
     return image
 
 
+@register(outgoing=True, pattern="^.stkrinfo$")
+async def get_pack_info(event):
+    if not event.text[0].isalpha() and event.text[0] not in ("/", "#", "@", "!"):
+        if not event.is_reply:
+            await bot.update_message(event, PACKINFO_HELP)
+            return
+        rep_msg = await event.get_reply_message()
+        if not rep_msg.document:
+            await event.edit("`Reply to a sticker to get the pack details`")
+            return
+        stickerset_attr = rep_msg.document.attributes[1]
+        if not isinstance(stickerset_attr, DocumentAttributeSticker):
+            await event.edit("`This is not a sticker. Reply to a sticker.`")
+            return
+        get_stickerset = await bot(GetStickerSetRequest(InputStickerSetID(id=stickerset_attr.stickerset.id, access_hash=stickerset_attr.stickerset.access_hash)))
+        pack_emojis = []
+        for document_sticker in get_stickerset.packs:
+            if document_sticker.emoticon not in pack_emojis:
+                pack_emojis.append(document_sticker.emoticon)
+        OUTPUT = f"**Sticker Title:** `{get_stickerset.set.title}\n`" \
+                f"**Sticker Short Name:** `{get_stickerset.set.short_name}`\n" \
+                f"**Official:** `{get_stickerset.set.official}`\n" \
+                f"**Archived:** `{get_stickerset.set.archived}`\n" \
+                f"**Stickers In Pack:** `{len(get_stickerset.packs)}`\n" \
+                f"**Emojis In Pack:** {' '.join(pack_emojis)}"
+        await event.edit(OUTPUT)
+
+
 CMD_HELP.update({
     "kang":
     ".kang"
@@ -244,4 +275,6 @@ CMD_HELP.update({
     "\n\n.kang [number]"
     "\nUsage: Kang's the sticker/image to the specified pack but uses 🤔 as emoji."
     "\n\n\nPlease kang this."
+    "\n\n.stkrinfo"
+    "\nUsage: Gets info about the sticker pack."
 })
