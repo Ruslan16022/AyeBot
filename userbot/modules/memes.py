@@ -10,7 +10,10 @@ import asyncio
 import random
 import re
 import time
+import requests
 
+from telethon.tl.functions.users import GetFullUserRequest
+from telethon.tl.types import MessageEntityMentionName
 from userbot import bot
 from cowpy import cow
 from collections import deque
@@ -288,6 +291,105 @@ RUNSREACTS = [
 ]
 DISABLE_RUN = False
 
+
+SHGS = [
+    "┐(´д｀)┌",
+    "┐(´～｀)┌",
+    "┐(´ー｀)┌",
+    "┐(￣ヘ￣)┌",
+    "╮(╯∀╰)╭",
+    "╮(╯_╰)╭",
+    "┐(´д`)┌",
+    "┐(´∀｀)┌",
+    "ʅ(́◡◝)ʃ",
+    "ლ(ﾟдﾟლ)",
+    "┐(ﾟ～ﾟ)┌",
+    "┐('д')┌",
+    "ლ｜＾Д＾ლ｜",
+    "ლ（╹ε╹ლ）",
+    "ლ(ಠ益ಠ)ლ",
+    "┐(‘～`;)┌",
+    "ヘ(´－｀;)ヘ",
+    "┐( -“-)┌",
+    "乁༼☯‿☯✿༽ㄏ",
+    "ʅ（´◔౪◔）ʃ",
+    "ლ(•ω •ლ)",
+    "ヽ(゜～゜o)ノ",
+    "ヽ(~～~ )ノ",
+    "┐(~ー~;)┌",
+    "┐(-。ー;)┌",
+    "¯\_(ツ)_/¯",
+    "¯\_(⊙_ʖ⊙)_/¯",
+    "乁ʕ •̀ ۝ •́ ʔㄏ",
+    "¯\_༼ ಥ ‿ ಥ ༽_/¯",
+    "乁( ⁰͡  Ĺ̯ ⁰͡ ) ㄏ",
+]
+
+
+SLAP_TEMPLATES = [
+    "{hits} {victim} with a {item}.",
+    "{hits} {victim} in the face with a {item}.",
+    "{hits} {victim} around a bit with a {item}.",
+    "{throws} a {item} at {victim}.",
+    "grabs a {item} and {throws} it at {victim}'s face.",
+    "launches a {item} in {victim}'s general direction.",
+    "starts slapping {victim} silly with a {item}.",
+    "pins {victim} down and repeatedly {hits} them with a {item}.",
+    "grabs up a {item} and {hits} {victim} with it.",
+    "ties {victim} to a chair and {throws} a {item} at them.",
+    "gave a friendly push to help {victim} learn to swim in lava."
+]
+
+ITEMS = [
+    "cast iron skillet",
+    "large trout",
+    "baseball bat",
+    "cricket bat",
+    "wooden cane",
+    "nail",
+    "printer",
+    "shovel",
+    "CRT monitor",
+    "physics textbook",
+    "toaster",
+    "portrait of Richard Stallman",
+    "television",
+    "five ton truck",
+    "roll of duct tape",
+    "book",
+    "laptop",
+    "old television",
+    "sack of rocks",
+    "rainbow trout",
+    "rubber chicken",
+    "spiked bat",
+    "fire extinguisher",
+    "heavy rock",
+    "chunk of dirt",
+    "beehive",
+    "piece of rotten meat",
+    "bear",
+    "ton of bricks",
+]
+
+
+THROW = [
+    "throws",
+    "flings",
+    "chucks",
+    "hurls",
+]
+
+
+HIT = [
+    "hits",
+    "whacks",
+    "slaps",
+    "smacks",
+    "bashes",
+]
+
+
 # ===========================================
 
 
@@ -316,6 +418,95 @@ async def kek(keks):
     for i in range(1, 15):
         time.sleep(0.3)
         await keks.edit(":" + uio[i % 2])
+
+
+@register(pattern="^.slap(?: |$)(.*)", outgoing=True)
+async def who(event):
+    """ slaps a user, or get slapped if not a reply. """
+    if event.fwd_from:
+        return
+
+    replied_user = await get_user(event)
+    caption = await slap(replied_user, event)
+    message_id_to_reply = event.message.reply_to_msg_id
+
+    if not message_id_to_reply:
+        message_id_to_reply = None
+
+    try:
+        await event.edit(caption)
+
+    except:
+        await event.edit("`Can't slap this person, need to fetch some sticks and stones !!`")
+
+async def get_user(event):
+    """ Get the user from argument or replied message. """
+    if event.reply_to_msg_id:
+        previous_message = await event.get_reply_message()
+        replied_user = await event.client(GetFullUserRequest(previous_message.from_id))
+    else:
+        user = event.pattern_match.group(1)
+
+        if user.isnumeric():
+            user = int(user)
+
+        if not user:
+            self_user = await event.client.get_me()
+            user = self_user.id
+
+        if event.message.entities is not None:
+            probable_user_mention_entity = event.message.entities[0]
+
+            if isinstance(probable_user_mention_entity, MessageEntityMentionName):
+                user_id = probable_user_mention_entity.user_id
+                replied_user = await event.client(GetFullUserRequest(user_id))
+                return replied_user
+        try:
+            user_object = await event.client.get_entity(user)
+            replied_user = await event.client(GetFullUserRequest(user_object.id))
+
+        except (TypeError, ValueError):
+            await event.edit("`I don't slap aliens, they ugly AF !!`")
+            return None
+
+    return replied_user
+
+async def slap(replied_user, event):
+    """ Construct a funny slap sentence !! """
+    user_id = replied_user.user.id
+    first_name = replied_user.user.first_name
+    username = replied_user.user.username
+
+    if username:
+        slapped = "@{}".format(username)
+    else:
+        slapped = f"[{first_name}](tg://user?id={user_id})"
+
+    temp = random.choice(SLAP_TEMPLATES)
+    item = random.choice(ITEMS)
+    hit = random.choice(HIT)
+    throw = random.choice(THROW)
+
+    caption = "..." + temp.format(victim=slapped, item=item, hits=hit, throws=throw)
+
+    return caption
+
+
+@register(outgoing=True, pattern="^.decide$")
+async def _(event):
+    if event.fwd_from:
+        return
+    message_id = event.message.id
+    if event.reply_to_msg_id:
+        message_id = event.reply_to_msg_id
+    r = requests.get("https://yesno.wtf/api").json()
+    await event.client.send_message(
+        event.chat_id,
+        str(r["answer"]).upper(),
+        reply_to=message_id,
+        file=r["image"]
+    )
+    await event.delete()
 
 
 @register(outgoing=True, pattern="^-_-$", ignore_unsafe=True)
@@ -495,7 +686,7 @@ async def react_meme(react):
 @errors_handler
 async def shrugger(shg):
     r""" ¯\_(ツ)_/¯ """
-    await shg.edit(r"¯\_(ツ)_/¯")
+    await shg.edit(random.choice(SHGS))
 
 
 @register(outgoing=True, pattern="^.insult$")
@@ -642,6 +833,12 @@ async def _(event):
 		    deq.rotate(1)
 
 
+@register(outgoing=True, pattern="^.10iq$")
+async def iqless(e):
+    if not e.text[0].isalpha() and e.text[0] not in ("/", "#", "@", "!"):
+        await e.edit("♿")
+
+
 @register(outgoing=True, pattern="^.moon$")
 async def _(event):
     if not event.text[0].isalpha() and event.text[0] not in ("/", "#", "@", "!"):
@@ -677,17 +874,6 @@ async def channel(e):
         await e.edit("[Join This Channel For More Info About Reignz Updates](https://t.me/reignzupdate)")
 
 
-@register(pattern=r".scam(?: |$)(.*)", outgoing=True)
-async def scam(event):
-    await event.delete()
-    input_str = event.pattern_match.group(1)
-    action = "typing"
-    if input_str:
-        action = input_str
-    async with event.client.action(event.chat_id, action):
-        await asyncio.sleep(60)
-
-
 @register(outgoing=True, pattern='^.type(?: |$)(.*)')
 @errors_handler
 async def typewriter(typew):
@@ -715,4 +901,97 @@ async def typewriter(typew):
         await asyncio.sleep(sleep_time)
 
 
-CMD_HELP.update({"memes": "Ask 🅱️ottom🅱️ext🅱️ot (@NotAMemeBot) for that."})
+@register(outgoing=True, pattern="^.smk (.*)")
+async def smrk(smk):
+        if not smk.text[0].isalpha() and smk.text[0] not in ("/", "#", "@", "!"):
+            textx = await smk.get_reply_message()
+            message = smk.text
+        if message[5:]:
+            message = str(message[5:])
+        elif textx:
+            message = textx
+            message = str(message.message)
+        if message == 'dele':
+            await smk.edit( message +'te the hell' + "ツ" )
+            await smk.edit("ツ")
+        else:
+             smirk = " ツ"
+             reply_text = message + smirk
+             await smk.edit(reply_text)
+
+
+@register(outgoing=True, pattern="^.lfy (.*)",)
+async def let_me_google_that_for_you(lmgtfy_q):
+    if not lmgtfy_q.text[0].isalpha() and lmgtfy_q.text[0] not in ("/", "#", "@", "!"):
+        textx = await lmgtfy_q.get_reply_message()
+        query = lmgtfy_q.text
+        if query[5:]:
+            query = str(query[5:])
+        elif textx:
+            query = textx
+            query = query.message
+        query_encoded = query.replace(" ", "+")
+        lfy_url = f"http://lmgtfy.com/?s=g&iie=1&q={query_encoded}"
+        payload = {'format': 'json', 'url': lfy_url}
+        r = requests.get('http://is.gd/create.php', params=payload)
+        await lmgtfy_q.edit(f"[{query}]({r.json()['shorturl']})")
+        if BOTLOG:
+            await bot.send_message(
+                BOTLOG_CHATID,
+                "LMGTFY query `" + query + "` was executed successfully",
+            )
+
+
+CMD_HELP.update({
+"memes": ".cowsay\
+\nUsage: cow which says things.\
+\n\n:/\
+\nUsage: Check yourself ;)\
+\n\n-_-\
+\nUsage: Ok...\
+\n\n.cp\
+\nUsage: Copypasta the famous meme\
+\n\n.vapor\
+\nUsage: Vaporize everything!\
+\n\n.str\
+\nUsage: Stretch it.\
+\n\n.10iq\
+\nUsage: You retard !!\
+\n\n.zal\
+\nUsage: Invoke the feeling of chaos.\
+\n\n.moon\
+\nUsage: kensar moon animation.\
+\n\n.clock\
+\nUsage: kensar clock animation.\
+\n\n.owo\
+\nUsage: UwU\
+\n\n.react\
+\nUsage: Make your userbot react to everything.\
+\n\n.slap\
+\nUsage: reply to slap them with random objects !!\
+\n\n.cry\
+\nUsage: y u du dis, i cri.\
+\n\n.shg\
+\nUsage: Shrug at it !!\
+\n\n.runs\
+\nUsage: Run, run, RUNNN! [`.disable runs`: disable | `.enable runs`: enable]\
+\n\n.metoo\
+\nUsage: Haha yes\
+\n\n.mock\
+\nUsage: Do it and find the real fun.\
+\n\n.clap\
+\nUsage: Praise people!\
+\n\n.f <emoji/character>\
+\nUsage: Pay Respects.\
+\n\n.bt\
+\nUsage: Believe me, you will find this useful.\
+\n\n.smk <text/reply>\
+\nUsage: A shit module for ツ , who cares.\
+\n\n.type\
+\nUsage: Just a small command to make your keyboard become a typewriter!\
+\n\n.lfy <query>\
+\nUsage: Let me Google that for you real quick !!\
+\n\n.decide\
+\nUsage: Make a quick decision.\
+\n\n\nThanks to 🅱️ottom🅱️ext🅱️ot (@NotAMemeBot) for some of these."
+})
