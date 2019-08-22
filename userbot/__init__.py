@@ -17,6 +17,7 @@ from pymongo import MongoClient
 from redis import StrictRedis
 from requests import get
 from telethon import TelegramClient
+from telethon.sessions import StringSession
 
 load_dotenv("config.env")
 
@@ -57,6 +58,8 @@ BOTLOG_CHATID = int(os.environ.get("BOTLOG_CHATID")) if BOTLOG else 0
 
 PM_AUTO_BAN = sb(os.environ.get("PM_AUTO_BAN", "False"))
 
+STRING_SESSION = os.environ.get("STRING_SESSION", None)
+
 MONGO_DB_URI = os.environ.get("MONGO_DB_URI", None)
 
 # remove.bg API key
@@ -94,8 +97,12 @@ CURRENCY_API = os.environ.get("CURRENCY_API", None)
 
 GDRIVE_FOLDER = os.environ.get("GDRIVE_FOLDER", None)
 
-# pylint: disable=invalid-name
-bot = TelegramClient("userbot", API_KEY, API_HASH)
+if STRING_SESSION:
+    # pylint: disable=invalid-name
+    bot = TelegramClient(StringSession(STRING_SESSION), API_KEY, API_HASH)
+else:
+    # pylint: disable=invalid-name
+    bot = TelegramClient("userbot", API_KEY, API_HASH)
 
 
 async def check_botlog_chatid():
