@@ -942,6 +942,12 @@ async def let_me_google_that_for_you(lmgtfy_q):
             )
 
 
+@register(outgoing=True, pattern="^.report$")
+async def keks(reportt):
+    """ k to kek """
+    await reportt.edit("`Reported To Telegram Successfully. Your Account Might Be In Danger!!!`")
+
+
 CMD_HELP.update({
 "memes": ".cowsay\
 \nUsage: cow which says things.\
