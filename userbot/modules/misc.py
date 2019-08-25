@@ -96,6 +96,36 @@ async def evox_poco(wannasee):
 		)
 
 
+@register(outgoing=True, pattern="^.json$")
+@errors_handler
+async def json(event):
+    if not event.text[0].isalpha() and event.text[0] not in ("/", "#", "@", "!"):
+        if event.fwd_from:
+            return
+        the_real_message = None
+        reply_to_id = None
+        if event.reply_to_msg_id:
+            previous_message = await event.get_reply_message()
+            the_real_message = previous_message.stringify()
+            reply_to_id = event.reply_to_msg_id
+        else:
+            the_real_message = event.stringify()
+            reply_to_id = event.message.id
+        if len(the_real_message) > 4096:
+            with io.BytesIO(str.encode(the_real_message)) as out_file:
+                out_file.name = "message.json"
+                await event.client.send_file(
+                    event.chat_id,
+                    out_file,
+                    force_document=True,
+                    allow_cache=False,
+                    reply_to=reply_to_id
+                )
+                await event.delete()
+        else:
+            await event.edit(f"`{the_real_message}`")
+
+
 CMD_HELP.update({
     'random':
     ".random <item1> <item2> ... <itemN>"
@@ -128,4 +158,9 @@ CMD_HELP.update({
 CMD_HELP.update({
     'evox': '.evox\
 \nUsage: Send the link of EvolutionX Rom For Poco F1 xD.'
+})
+
+CMD_HELP.update({
+    'json': '.json\
+\nUsage: Get detailed JSON formatted data about replied message.'
 })
