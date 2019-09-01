@@ -58,17 +58,9 @@ RUN python3 -m ensurepip \
     rm -r /root/.cache
 
 #
-# Make user for userbot itself
+# Clone staging by default
 #
-RUN  sed -e 's;^# \(%wheel.*NOPASSWD.*\);\1;g' -i /etc/sudoers
-RUN adduser userbot --disabled-password --home /home/userbot
-RUN adduser userbot wheel
-USER userbot
-
-#
-# Clone master by default
-#
-RUN git clone -b staging https://github.com/PainKiller3/Telegram-UserBot.git /home/userbot/userbot
+RUN git clone -b staging https://github.com/PainKiller3/Telegram-UserBot.git /root/userbot
 
 #
 # !!! NOT FOR PRODUCTION !!!
@@ -79,14 +71,14 @@ RUN git clone -b staging https://github.com/PainKiller3/Telegram-UserBot.git /ho
 #
 # Make binary folder and include in PATH
 #
-RUN mkdir /home/userbot/bin
-ENV PATH="/home/userbot/bin:$PATH"
-WORKDIR /home/userbot/userbot
+RUN mkdir /root/userbot/bin
+ENV PATH="/root/userbot/bin:$PATH"
+WORKDIR /root/userbot/
 
 #
 # Copies session and config(if it exists)
 #
-COPY ./sample_config.env ./userbot.session* ./config.env* /home/userbot/userbot/
+COPY ./sample_config.env ./userbot.session* ./config.env* /root/userbot/
 
 #
 # Install dependencies
@@ -96,6 +88,6 @@ RUN pip3 install -r requirements.txt
 #
 # Finalization
 #
-RUN curl -s https://raw.githubusercontent.com/yshalsager/megadown/master/megadown -o /home/userbot/bin/megadown && sudo chmod a+x /home/userbot/bin/megadown
-RUN curl -s https://raw.githubusercontent.com/yshalsager/cmrudl.py/master/cmrudl.py -o /home/userbot/bin/cmrudl && sudo chmod a+x /home/userbot/bin/cmrudl
-CMD ["dash","init/start.sh"]
+RUN curl -s https://raw.githubusercontent.com/yshalsager/megadown/master/megadown -o /root/userbot/bin/megadown && sudo chmod a+x /root/userbot/bin/megadown
+RUN curl -s https://raw.githubusercontent.com/yshalsager/cmrudl.py/master/cmrudl.py -o /root/userbot/bin/cmrudl && sudo chmod a+x /root/userbot/bin/cmrudl
+CMD ["bash","init/start.sh"]
