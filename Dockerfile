@@ -9,9 +9,44 @@ RUN sed -e 's;^#http\(.*\)/edge/community;http\1/edge/community;g' -i /etc/apk/r
 # Installing Core Components
 RUN apk add --no-cache --update \
     git \
+    dash \
+    libffi-dev \
+    openssl-dev \
+    bzip2-dev \
+    zlib-dev \
+    readline-dev \
+    sqlite-dev \
+    build-base \
     bash \
-    python3 \
+    python3 \ 
+    py-pillow \
+    py-requests \
+    libpq \
+    curl \
     sudo \
+    neofetch \
+    musl \
+    py-tz \
+    py3-aiohttp \
+    py-six \
+    py-click \
+    redis \
+    libxslt-dev \
+    libxml2 \
+    libxml2-dev \
+    py-pip \
+    linux-headers \
+    jpeg-dev \
+    gcc \
+    python-dev \
+    python3-dev \
+    sqlite \
+    figlet \
+    libwebp-dev \
+    openssl \
+    pv \
+    jq \
+    wget \
     chromium \
     chromium-chromedriver
 
@@ -21,16 +56,6 @@ RUN python3 -m ensurepip \
     if [ ! -e /usr/bin/pip ]; then ln -s pip3 /usr/bin/pip ; fi && \
     if [[ ! -e /usr/bin/python ]]; then ln -sf /usr/bin/python3 /usr/bin/python; fi && \
     rm -r /root/.cache
-
-
-#
-# Install dependencies
-#
-RUN apk add --no-cache \
-    py-pillow py-requests \
-    libpq curl neofetch \
-    musl py-tz py3-aiohttp \
-    py-six py-click
 
 #
 # Make user for userbot itself
@@ -66,7 +91,7 @@ COPY ./sample_config.env ./userbot.session* ./config.env* /home/userbot/userbot/
 #
 # Install dependencies
 #
-RUN sudo pip3 install -r requirements.txt
+RUN pip3 install -r requirements.txt
 
 #
 # Finalization
