@@ -34,3 +34,5 @@ psutil
 pylast
 bs4
 async_generator
+pySmartDL
+aria2p
