@@ -9,6 +9,7 @@ import io
 import urllib.request
 
 import math
+from os import remove
 from PIL import Image
 from telethon.tl.types import DocumentAttributeFilename, MessageMediaPhoto
 
@@ -47,7 +48,16 @@ async def kang(args):
                 emojibypass = True
         elif (DocumentAttributeFilename(file_name='AnimatedSticker.tgs') in
               message.media.document.attributes):
-            emoji = message.media.document.attributes[0].alt
+            await bot.download_file(message.media.document, 'AnimatedSticker.tgs')
+
+            # The attributes list of animated stickers is not consistent
+            # for some reason, so we look for the emoji in all possible
+            # parts of the attributes (hacky, but consistent.)
+            try:
+                emoji = message.media.document.attributes[1].alt 
+            except:
+                emoji = message.media.document.attributes[0].alt
+
             emojibypass = True
             is_anim = True
             photo = 1
@@ -120,9 +130,9 @@ async def kang(args):
                         # Ensure user doesn't get spamming notifications
                         await bot.send_read_acknowledge(conv.chat_id)
                         if is_anim:
-                            await bot.forward_messages('Stickers',
-                                                       [message.id],
-                                                       args.chat_id)
+                            await conv.send_file('AnimatedSticker.tgs', force_document=True)
+                            remove('AnimatedSticker.tgs')
+                            #await bot.forward_messages('Stickers', [message.id], args.chat_id)
                         else:
                             file.seek(0)
                             await conv.send_file(file, force_document=True)
