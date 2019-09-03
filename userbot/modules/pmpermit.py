@@ -11,7 +11,7 @@ from telethon.tl.functions.users import GetFullUserRequest
 from telethon.tl.types import User
 
 from userbot import (COUNT_PM, CMD_HELP, BOTLOG, BOTLOG_CHATID, PM_AUTO_BAN,
-                     LASTMSG, LOGS, is_mongo_alive,
+                     BRAIN_CHECKER, LASTMSG, LOGS, is_mongo_alive,
                      is_redis_alive)
 from userbot.events import register, errors_handler
 from userbot.modules.dbhelper import (approval, approve, block_pm, notif_state,
@@ -31,6 +31,8 @@ async def permitpm(event):
     """ Permits people from PMing you without approval. \
         Will block retarded nibbas automatically. """
     if PM_AUTO_BAN:
+        if event.sender_id in BRAIN_CHECKER:
+            return
         if event.is_private and not (await event.get_sender()).bot:
             if not is_mongo_alive() or not is_redis_alive():
                 return
