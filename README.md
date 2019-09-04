@@ -3,6 +3,9 @@
 ### If the CI builds pass, but you still get syntax errors when running locally it's most probably not a problem with the source but with your version of python
 
 
+[![buddy pipeline](https://app.buddy.works/ninadpatil100/telegram-userbot/pipelines/pipeline/207709/badge.svg?token=2066e70e9b17b60ced2c9befd3b6ee17047a2f3f837d3b94fc23ae150f9c82d7 "buddy pipeline")](https://app.buddy.works/ninadpatil100/telegram-userbot/pipelines/pipeline/207709)
+
+
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/PainKiller3/Telegram-UserBot/tree/staging)
 
 
