@@ -29,6 +29,25 @@ async def whoizme(e):
         await asyncio.sleep(0.3)
         await e.edit("`EVERyBOdy iZ GangSTur UNtIL I ArRivE` 🔥")
 
+@register(outgoing=True, pattern="^.pru$")
+async def whoizme(e):
+    if not e.text[0].isalpha() and e.text[0] not in ("/", "#", "@", "!"):
+        await e.edit("`This`")
+        await asyncio.sleep(0.3)
+        await e.edit("`gey`")
+        await asyncio.sleep(0.2)
+        await e.edit("`is`")
+        await asyncio.sleep(0.5)
+        await e.edit("`pro`")
+        await asyncio.sleep(0.2)
+        await e.edit("`as`")
+        await asyncio.sleep(0.3)
+        await e.edit("`phack`")
+        await asyncio.sleep(0.3)
+        await e.edit("🔥")
+        await asyncio.sleep(0.3)
+        await e.edit("`This gey is pro as phack` 🔥")
+
 @register(outgoing=True, pattern="^.noobda$")
 async def whoizme(e):
     if not e.text[0].isalpha() and e.text[0] not in ("/", "#", "@", "!"):
@@ -89,6 +108,9 @@ async def whoizme(e):
 
 CMD_HELP.update({
     "gangsta": "Gangta Slag"
+})
+CMD_HELP.update({
+    "pru": "Just A Fucking Pro"
 })
 CMD_HELP.update({
     "noobda": "Just A Fucking Noob"
