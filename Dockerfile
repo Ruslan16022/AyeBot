@@ -90,6 +90,7 @@ RUN pip3 install -r requirements.txt
 #
 # Finalization
 #
-RUN curl -s https://raw.githubusercontent.com/yshalsager/megadown/master/megadown -o /root/userbot/bin/megadown && sudo chmod a+x /root/userbot/bin/megadown
-RUN curl -s https://raw.githubusercontent.com/yshalsager/cmrudl.py/master/cmrudl.py -o /root/userbot/bin/cmrudl && sudo chmod a+x /root/userbot/bin/cmrudl
+RUN mkdir /app/bin
+RUN curl https://raw.githubusercontent.com/yshalsager/megadown/master/megadown -o /app/bin/megadown && sudo chmod a+x /app/bin/megadown
+RUN curl https://raw.githubusercontent.com/yshalsager/cmrudl.py/master/cmrudl.py -o /app/bin/cmrudl && sudo chmod a+x /app/bin/cmrudl
 CMD ["bash","init/start.sh"]
