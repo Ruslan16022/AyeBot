@@ -38,9 +38,11 @@ RUN apk add --no-cache --update \
     linux-headers \
     jpeg-dev \
     gcc \
+    g++ \
     python-dev \
     python3-dev \
     sqlite \
+    ffmpeg \
     figlet \
     libwebp-dev \
     openssl \
