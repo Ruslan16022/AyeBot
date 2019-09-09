@@ -20,7 +20,7 @@ from collections import deque
 from telethon import events, functions, types
 
 from userbot import CMD_HELP, ZALG_LIST
-from userbot.events import register, errors_handler
+from userbot.events import errors_handler, register
 
 # ================= CONSTANT =================
 METOOSTR = [

@@ -6,15 +6,15 @@
 """ Userbot module for kanging stickers or making new ones. """
 
 import io
+import math
 import urllib.request
 
-import math
 from os import remove
 from PIL import Image
 from telethon.tl.types import DocumentAttributeFilename, MessageMediaPhoto
 
-from userbot import bot, CMD_HELP
-from userbot.events import register, errors_handler
+from userbot import CMD_HELP, bot
+from userbot.events import errors_handler, register
 from telethon.tl.functions.messages import GetStickerSetRequest
 from telethon.tl.types import InputStickerSetID
 from telethon.tl.types import DocumentAttributeSticker
