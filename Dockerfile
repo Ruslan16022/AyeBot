@@ -49,6 +49,7 @@ RUN apk add --no-cache --update \
     pv \
     jq \
     wget \
+    aria2 \
     chromium \
     chromium-chromedriver
 
