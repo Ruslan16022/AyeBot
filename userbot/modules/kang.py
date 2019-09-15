@@ -14,7 +14,7 @@ from PIL import Image
 from telethon.tl.types import DocumentAttributeFilename, MessageMediaPhoto
 
 from userbot import CMD_HELP, bot
-from userbot.events import errors_handler, register
+from userbot.events import register
 from telethon.tl.functions.messages import GetStickerSetRequest
 from telethon.tl.types import InputStickerSetID
 from telethon.tl.types import DocumentAttributeSticker
@@ -23,7 +23,6 @@ A pack can't have more than 120 stickers at the moment."
 
 
 @register(outgoing=True, pattern="^.kang")
-@errors_handler
 async def kang(args):
     """ For .kang command, kangs stickers or creates new ones. """
     user = await bot.get_me()
