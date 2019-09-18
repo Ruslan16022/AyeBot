@@ -32,6 +32,7 @@ def register(**args):
     disable_errors = args.get('disable_errors', False)
     permit_sudo = args.get('permit_sudo', False)
 
+    incoming_func = args.get('incoming', True)
     if pattern is not None and not pattern.startswith('(?i)'):
         args['pattern'] = '(?i)' + pattern
 
@@ -59,7 +60,9 @@ def register(**args):
             if group_only and not check.is_group:
                 await check.respond("`Are you sure this is a group?`")
                 return
-
+            if incoming_func and not check.out:
+                await func(check)
+                return
 
                 # Announce that you are handling the request
 
