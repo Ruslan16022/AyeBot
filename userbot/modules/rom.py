@@ -39,10 +39,17 @@ async def device_info(request):
             name = item['name']
             brand = item['brand']
             codename = item['codename']
-            reply += f'**📲 Evolution X for {brand} {name} ({codename})**' \
-                f'[⬇ Download Now](https://sourceforge.net/projects/evolution-x/files/{codename})'
+            maintainer = item['supported_versions'][0]['maintainer_name']
+            xda = item['supported_versions'][0]['xda_thread']
+            mainurl = item['supported_versions'][0]['maintainer_url'] 
+            version = item['supported_versions'][0]['version_code']
+            reply += f'**📲 Evolution X for {brand} {name} ({codename})**\n' \
+                f'👤 by: {maintainer}\n' \
+                f'ℹ️ Version: {version}\n' \
+                f'[⬇ Download Now](https://sourceforge.net/projects/evolution-x/files/{codename}) \n' \
+                f'[📱 XDA Thread]({xda})'
     else:
-        reply = f"`{brand} {name} ({codename}) isn't officially supported.`\n"
+        reply = f"`Device not found!!!.`\n"
     await request.edit(reply)
 
 
