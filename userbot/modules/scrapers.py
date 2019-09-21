@@ -7,14 +7,13 @@
 
 import os, shutil, bs4, re
 from time import sleep
-from asyncio import create_subprocess_shell as asyncsh
-from asyncio.subprocess import PIPE as asyncsh_PIPE
 from html import unescape
 from re import findall
 from datetime import datetime
 from selenium import webdriver
 from urllib.parse import quote_plus
 from urllib import parse
+from shutil import rmtree
 from urllib.error import HTTPError
 
 from emoji import get_emoji_regexp
@@ -132,9 +131,7 @@ async def img_sampler(event):
     lst = paths[0][query]
     await event.client.send_file(
         await event.client.get_input_entity(event.chat_id), lst)
-    os.remove(lst[0])
-    os.remove(lst[1])
-    os.rmdir(os.path.dirname(os.path.abspath(lst[0])))
+    rmtree(os.path.dirname(os.path.abspath(lst[0])))
     await event.delete()
 
 
