@@ -33,7 +33,7 @@ async def kang(args):
     emojibypass = False
     is_anim = False
     emoji = ""
-    await args.edit("`Kanging..........`")
+    await args.edit("`Kanging...`")
     if message and message.media:
         if isinstance(message.media, MessageMediaPhoto):
             photo = io.BytesIO()
@@ -41,10 +41,10 @@ async def kang(args):
         elif "image" in message.media.document.mime_type.split('/'):
             photo = io.BytesIO()
             await bot.download_file(message.media.document, photo)
-            if (DocumentAttributeFilename(file_name='sticker.webp') in
-                    message.media.document.attributes):
-                emoji = message.media.document.attributes[1].alt
-                emojibypass = True
+        if (DocumentAttributeFilename(file_name='sticker.webp') in
+                message.media.document.attributes):
+            emoji = message.media.document.attributes[1].alt
+            emojibypass = True
         elif (DocumentAttributeFilename(file_name='AnimatedSticker.tgs') in
               message.media.document.attributes):
             emoji = message.media.document.attributes[0].alt
@@ -119,8 +119,13 @@ async def kang(args):
                         await conv.get_response()
                         # Ensure user doesn't get spamming notifications
                         await bot.send_read_acknowledge(conv.chat_id)
-                        file.seek(0)
-                        await conv.send_file(file, force_document=True)
+                        if is_anim:
+                            file.seek(0)
+                            upload = await args.client.upload_file(file, file_name="AnimatedSticker.tgs")
+                            await conv.send_file(upload, force_document=True)
+                        else:
+                            file.seek(0)
+                            await conv.send_file(file, force_document=True)
                         await conv.get_response()
                         await conv.send_message(emoji)
                         # Ensure user doesn't get spamming notifications
@@ -147,8 +152,13 @@ async def kang(args):
                             f"Sticker added in a Different Pack! This Pack is Newly created! Your pack can be found [here](t.me/addstickers/{packname})",
                             parse_mode='md')
                         return
-                file.seek(0)
-                await conv.send_file(file, force_document=True)
+                if is_anim:
+                    file.seek(0)
+                    upload = await args.client.upload_file(file, file_name="AnimatedSticker.tgs")
+                    await conv.send_file(upload, force_document=True)
+                else:
+                    file.seek(0)
+                    await conv.send_file(file, force_document=True)
                 await conv.get_response()
                 await conv.send_message(emoji)
                 # Ensure user doesn't get spamming notifications
@@ -170,8 +180,13 @@ doesn't exist! Making a new one!")
                 await conv.get_response()
                 # Ensure user doesn't get spamming notifications
                 await bot.send_read_acknowledge(conv.chat_id)
-                file.seek(0)
-                await conv.send_file(file, force_document=True)
+                if is_anim:
+                    file.seek(0)
+                    upload = await args.client.upload_file(file, file_name="AnimatedSticker.tgs")
+                    await conv.send_file(upload, force_document=True)
+                else:
+                    file.seek(0)
+                    await conv.send_file(file, force_document=True)
                 await conv.get_response()
                 await conv.send_message(emoji)
                 # Ensure user doesn't get spamming notifications
