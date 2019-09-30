@@ -5,6 +5,9 @@
 #
 """ Userbot module containing various modules. """
 
+import asyncio
+from asyncio import wait
+
 from userbot import bot
 import os, shutil, bs4, re
 from html import unescape
@@ -197,6 +200,33 @@ async def scam(event):
             return
 
 
+@register(outgoing=True, pattern="^.gangsta$")
+async def whoizme(e):
+    if not e.text[0].isalpha() and e.text[0] not in ("/", "#", "@", "!"):
+        await e.edit("`EVERyBOdy iZ GangSTur UNtIL I ArRivE` 🔥")
+
+@register(outgoing=True, pattern="^.noobda$")
+async def whoizme(e):
+    if not e.text[0].isalpha() and e.text[0] not in ("/", "#", "@", "!"):
+        await e.edit("`EVERyOne iZ Noob UNtIL Ultra Noob ArRivE` 🔥")
+
+@register(outgoing=True, pattern="^.hacker$")
+async def whoizme(e):
+    if not e.text[0].isalpha() and e.text[0] not in ("/", "#", "@", "!"):
+        await e.edit("`Your account has been haXed.` 🔥") 
+
+@register(outgoing=True, pattern="^.pruhack$")
+async def whoizme(e):
+    if not e.text[0].isalpha() and e.text[0] not in ("/", "#", "@", "!"):
+        await e.edit("`Your account iz hacked now... Pay moni to remove get rid of it` 🔥")
+
+
+@register(outgoing=True, pattern="^.pru$")
+async def whoizme(e):
+    if not e.text[0].isalpha() and e.text[0] not in ("/", "#", "@", "!"):
+        await e.edit("`This gey is pro as phack` 🔥")
+
+
 CMD_HELP.update({
     'imdb': ".imdb <movie-name>\
     \nUsage: Shows movie info and other stuffs."
@@ -226,4 +256,21 @@ CMD_HELP.update({
 CMD_HELP.update({
     'scam': '.scam <option>\
 \nUsage: Scam troll.'
+})
+
+CMD_HELP.update({
+    "gangsta": "Gangta Slag"
+})
+CMD_HELP.update({
+    "noobda": "Just A Fucking Noob"
+})
+CMD_HELP.update({
+    "hacker": "Account` Hacked And Deleted"
+})
+CMD_HELP.update({
+    "pruhack": "Account`Hacked Need Money xD"
+})
+
+CMD_HELP.update({
+    "pru": "Just A Fucking Pro"
 })
