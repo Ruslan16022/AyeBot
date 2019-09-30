@@ -9,12 +9,20 @@ import asyncio
 from asyncio import wait
 
 from userbot import bot
+
 import os, shutil, bs4, re
+from time import sleep
 from html import unescape
 from re import findall
 from datetime import datetime
+from urllib.parse import quote_plus
+from urllib import parse
+from shutil import rmtree
 from collections import deque
 from telethon import events, functions, types
+
+from gtts import gTTS
+from requests import get
 
 from userbot import (BOTLOG, BOTLOG_CHATID, CMD_HELP, CURRENCY_API,
                      YOUTUBE_API_KEY, bot)
