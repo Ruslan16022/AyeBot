@@ -129,6 +129,7 @@ async def facepalm(e):
     if not e.text[0].isalpha() and e.text[0] not in ("/", "#", "@", "!"):
         await e.edit("🤦‍♂")
 
+
 @register(outgoing=True, pattern="^.myusernames$")
 async def _(event):
     if event.fwd_from:
@@ -143,8 +144,18 @@ async def _(event):
 @register(outgoing=True, pattern="^.channel$")
 async def channel(e):
     if not e.text[0].isalpha() and e.text[0] not in ("/", "#", "@", "!"):
-        await e.edit("[Join This Channel For More Info About Reignz Updates](https://t.me/reignzupdate)")
+        await e.edit("[Join This Channel](t.me/)")
 
+
+@register(outgoing=True, pattern="^.clock$")
+async def _(event):
+ if event.fwd_from:
+  return
+ deq = deque(list("🕙🕘🕗🕖🕕🕔🕓🕒🕑🕐🕛"))
+ for _ in range(48):
+  await asyncio.sleep(0.1)
+  await event.edit("".join(deq))
+  deq.rotate(1)
 
 @register(outgoing=True, pattern="^.json$")
 async def json(event):
@@ -298,4 +309,8 @@ CMD_HELP.update({
 
 CMD_HELP.update({
     "pru": "Just A Fucking Pro"
+})
+
+CMD_HELP.update({
+    "clock": "часики наверно которые крутяца"
 })
