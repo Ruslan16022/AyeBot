@@ -9,7 +9,7 @@
     "modular",
     "productivity"
   ],
-  "repository": "https://github.com/Ruslan16022/AyeBot/",
+  "repository": "https://github.com/Ruslan16022/AyeBot/tree/dev/reignz",
   "website": "https://telegra.ph/How-to-host-a-Telegram-Userbot-07-24",
   "success_url": "https://t.me/userbot_announcements",
   "stack": "container",
