@@ -3,7 +3,7 @@ FROM baalajimaestro/userbot_python:latest
 ENV PATH="/app/bin:$PATH"
 WORKDIR /app
 
-RUN git clone https://github.com/Ruslan16022/AyeBot.git -b dev/reignz /app
+RUN git clone https://github.com/Ruslan16022/AyeBot -b dev/reignz /app
 
 #
 # Copies session and config(if it exists)
