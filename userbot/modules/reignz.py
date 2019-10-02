@@ -175,6 +175,17 @@ async def json(event):
             await event.edit(f"`{the_real_message}`")
 
 
+@register(outgoing=True, pattern="^.moon$")
+async def _(event):
+ if event.fwd_from:
+  return
+ deq = deque(list("🌗🌘🌑🌒🌓🌔🌕🌖"))
+ for _ in range(32):
+  await asyncio.sleep(0.1)
+  await event.edit("".join(deq))
+  deq.rotate(1)
+
+
 @register(pattern=r".scam(?: |$)(.*)", outgoing=True)
 async def scam(event):
     """ Just a small command to fake chat actions for fun !! """
@@ -260,6 +271,12 @@ CMD_HELP.update({
     'json': '.json\
 \nUsage: Get detailed JSON formatted data about replied message.'
 })
+
+CMD_HELP.update({
+    'moon': '.moon\
+\nUsage: Pokuda zalupa reksa.'
+})
+
 
 CMD_HELP.update({
     'scam': '.scam <option>\
