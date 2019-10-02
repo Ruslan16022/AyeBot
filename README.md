@@ -3,7 +3,7 @@
 ### If the CI builds pass, but you still get syntax errors when running locally it's most probably not a problem with the source but with your version of python
 
 
-[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/PainKiller3/Telegram-UserBot/tree/dev/reignz)
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/Ruslan1602/AyeBot)
 
 
 ```
