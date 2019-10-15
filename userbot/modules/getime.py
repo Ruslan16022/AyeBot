@@ -10,7 +10,7 @@ from userbot import CMD_HELP, bot
 FONT_FILE_TO_USE = "/usr/share/fonts/truetype/dejavu/DejaVuSansMono.ttf"
 
 
-@borg.on(admin_cmd(pattern="getime ?(.*)"))  # pylint:disable=E0602
+@borg.on(CMD_HELP(pattern="getime ?(.*)"))  # pylint:disable=E0602
 async def _(event):
     if event.fwd_from:
         return
