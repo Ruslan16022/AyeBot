@@ -23,8 +23,8 @@ async def _(event):
     elif event.reply_to_msg_id:
         previous_message = await event.get_reply_message()
         reply_msg_id = previous_message.id
-    if not os.path.isdir(Config.TMP_DOWNLOAD_DIRECTORY):  # pylint:disable=E0602
-        os.makedirs(Config.TMP_DOWNLOAD_DIRECTORY)  # pylint:disable=E0602
+    if not os.path.isdir(Config.TMP_DOWNLOAD_DIRECTORY):  
+        os.makedirs(Config.TMP_DOWNLOAD_DIRECTORY) 
     # pylint:disable=E0602
     required_file_name = Config.TMP_DOWNLOAD_DIRECTORY + " " + str(datetime.now()) + ".webp"
     img = Image.new("RGB", (250, 50), color=(0, 0, 0))
@@ -32,10 +32,10 @@ async def _(event):
     drawn_text = ImageDraw.Draw(img)
     drawn_text.text((10, 10), current_time, font=fnt, fill=(255, 255, 255))
     img.save(required_file_name)
-    await borg.send_file(  # pylint:disable=E0602
+    await borg.send_file(
         event.chat_id,
         required_file_name,
-        caption="Time: Powered by @UniBorg",
+        caption="Time: Powered by ",
         # Courtesy: @ManueI15
         reply_to=reply_msg_id
     )
@@ -52,4 +52,4 @@ async def _(event):
     if event.fwd_from:
         return
     input_str = event.pattern_match.group(1)
-    logger.info(input_str)  # pylint:disable=E0602
+    logger.info(input_str) 
