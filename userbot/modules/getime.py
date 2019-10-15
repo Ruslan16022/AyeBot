@@ -4,8 +4,9 @@ Syntax: .getime"""
 import asyncio
 import os
 from datetime import datetime
+from telethon import TelegramClient, events
 from PIL import Image, ImageDraw, ImageFont
-from userbot import bot, events, CMD_HELP
+from userbot import bot, CMD_HELP
 
 FONT_FILE_TO_USE = "/usr/share/fonts/truetype/dejavu/DejaVuSansMono.ttf"
 
