@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from telethon import events, bot
+from telethon import events
 import random
 import asyncio
 
