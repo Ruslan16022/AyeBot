@@ -24,10 +24,6 @@ async def _(e):
         to_promote_id = r_mesg.sender_id
     elif input_str:
         to_promote_id = input_str
-    try:
-    except as exc:
-        await event.edit(str(exc))
-    else:
         await event.edit("Successfully Promoted")
         await asyncio.sleep(5)
         await event.delete()
