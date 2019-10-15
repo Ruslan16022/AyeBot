@@ -8,7 +8,7 @@ from datetime import datetime
 from userbot import CMD_HELP, bot
 
 
-@bot.on(admin_cmd(pattern="nfc (.*)"))  # pylint:disable=E0602
+@bot.on(CMD_HELP(pattern="nfc (.*)"))  # pylint:disable=E0602
 async def _(event):
     if event.fwd_from:
         return
