@@ -10,8 +10,8 @@ from userbot import CMD_HELP
 FONT_FILE_TO_USE = "/usr/share/fonts/truetype/dejavu/DejaVuSansMono.ttf"
 
 
-@bot.on(events.NewMessage(pattern=r"\.getime", outgoing=True)
-async def _(e):
+@bot.on(events.NewMessage(pattern=r"^.getime$", outgoing=True))
+async def getime(e):
     if event.fwd_from:
         return
     current_time = datetime.now().strftime("%H : %M : %S")
