@@ -6,7 +6,7 @@ from userbot import bot
 import asyncio
 
 
-@borg.on(events.NewMessage(pattern=r"\-listmyusernames", outgoing=True))
+@bot.on(events.NewMessage(pattern=r"\-listmyusernames", outgoing=True))
 async def _(event):
     if event.fwd_from:
         return
