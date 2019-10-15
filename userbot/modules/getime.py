@@ -47,8 +47,8 @@ async def getime(e):
     await event.delete()
 
 
-@bot.on(events.NewMessage(pattern=r"\.time", outgoing=True)
-async def _(event):
+@bot.on(events.NewMessage(pattern=r"^.getime$", outgoing=True))
+async def getime(e):
     if event.fwd_from:
         return
     input_str = event.pattern_match.group(1)
