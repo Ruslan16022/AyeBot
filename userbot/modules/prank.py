@@ -1,7 +1,7 @@
 from telethon import events
 import asyncio
 from datetime import datetime
-from userbot import bot
+from userbot import CMD_HELP, bot
 
 from telethon.tl.functions.channels import EditAdminRequest
 from telethon.tl.types import ChatAdminRights

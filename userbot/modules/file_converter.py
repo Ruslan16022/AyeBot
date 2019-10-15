@@ -5,10 +5,10 @@ import asyncio
 import os
 import time
 from datetime import datetime
-from userbot import CMD_HELP, bot
+from userbot import bot
 
 
-@bot.on(CMD_HELP(pattern="nfc (.*)"))  # pylint:disable=E0602
+@bot.on(events.NewMessage(pattern=r"\.nfc", outgoing=True)
 async def _(event):
     if event.fwd_from:
         return
