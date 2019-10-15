@@ -6,7 +6,7 @@ from userbot import CMD_HELP, bot
 
 
 @bot.on(events.NewMessage(pattern=r"\.admin", outgoing=True)
-async def _(event):
+async def call_admin(event):
     if event.fwd_from:
         return
     mentions = "@admin: **Spam Spotted**"
