@@ -5,8 +5,8 @@ from telethon.tl.types import ChatAdminRights
 from userbot import bot,SPAM,SPAM_ALLOWANCE,BRAIN_CHECKER,LOGGER_GROUP,LOGGER
 
 
-@bot.on(events.NewMessage(pattern=r"^@tagall$", outgoing=True))
-@bot.on(events.MessageEdited(pattern=r"^@tagall$", outgoing=True))
+@bot.on(events.NewMessage(pattern=r"^.tagall$", outgoing=True))
+@bot.on(events.MessageEdited(pattern=r"^.tagall$", outgoing=True))
 async def tagging_powerful(e):
     mentions = "@tagall"
     chat = await e.get_input_chat()
