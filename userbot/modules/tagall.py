@@ -2,7 +2,7 @@ from telethon import TelegramClient, events
 import asyncio
 from telethon.tl.functions.channels import EditAdminRequest
 from telethon.tl.types import ChatAdminRights
-from userbot import bot,BRAIN_CHECKER,LOGGER_GROUP,LOGGER
+from userbot import bot
 
 
 @bot.on(events.NewMessage(pattern=r"^.tagall$", outgoing=True))
