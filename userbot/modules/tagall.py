@@ -5,7 +5,7 @@ from telethon import events
 from userbot import CMD_HELP, bot
 
 
-@bot.on(admin_cmd(pattern="tagall"))
+@bot.on(CMD_HELP(pattern="tagall"))
 async def _(event):
     if event.fwd_from:
         return
