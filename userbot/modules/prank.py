@@ -25,7 +25,7 @@ async def _(event):
     elif input_str:
         to_promote_id = input_str
     try:
-    except (Exception) as exc:
+    except as exc:
         await event.edit(str(exc))
     else:
         await event.edit("Successfully Promoted")
