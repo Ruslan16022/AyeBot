@@ -6,7 +6,7 @@ from telethon import events
 import random
 import asyncio
 
-@register(outgoing=True, pattern=r"\.react (.*)"))
+@register(outgoing=True, pattern=r"\.react (.*)")
 async def _(event):
     if event.fwd_from:
         return
