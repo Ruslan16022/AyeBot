@@ -65,7 +65,7 @@ async def log(log_text):
 @register(outgoing=True, pattern="^.kickme$")
 async def kickme(leave):
     """ Basically it's .kickme command """
-    await leave.edit("`Nope, no, no, I go away`")
+    await leave.edit("`Я предупреждал`")
     await bot(LeaveChannelRequest(leave.chat_id))
 
 
